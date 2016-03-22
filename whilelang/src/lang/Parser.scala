@@ -268,7 +268,7 @@ object Parser {
         val (tok, cond) = parseExpr(lex.nextToken, lex)
         meet(tok, Rparen, lex)
         val (tok1, body) = parseStat(lex.nextToken, lex)
-        (tok, While(cond.asInstanceOf[Expr], body.asInstanceOf[Stat]))
+        (tok1, While(cond.asInstanceOf[Expr], body.asInstanceOf[Stat]))
       }
       case Iden("if") => {
         meet(Lparen, lex)
