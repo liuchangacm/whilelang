@@ -1,0 +1,76 @@
+/**
+ * Copyright Chang Liu (liuchang@cs.umd.edu)
+ */
+package lang
+
+/**
+ * @author Chang Liu (liuchang@cs.umd.edu)
+ */
+trait Ast {
+  def indent(n:Int) = {
+    var sb = new StringBuffer
+    for(_ <- 0 to n) sb.append('\t')
+    sb.toString
+  }
+}
+sealed trait Stat extends Ast {
+  def toString(n:Int):String = toString
+}
+sealed trait Expr extends Ast
+
+case object Skip extends Stat {
+  override def toString = toString(0)
+  override def toString(n:Int) = indent(n) + "skip;\n"
+}
+case class Assign(v:String, e:Expr) extends Stat {
+  override def toString = toString(0)
+  override def toString(n:Int) = indent(n) + v + " = " + e.toString + ";\n"
+}
+case class Seq(s1:Stat, s2:Stat) extends Stat {
+  override def toString = toString(0)
+  override def toString(n:Int) = s1.toString(n) + s2.toString(n)
+}
+case class If(cond:Expr, tbranch:Stat, fbranch:Stat) extends Stat {
+  override def toString = toString(0)
+  override def toString(n:Int) = 
+      indent(n) + s"if ($cond) {\n" +
+      tbranch.toString(n+1) + indent(n) + "}" +
+      (if (fbranch == Skip) "\n" else " else {\n" + fbranch.toString(n+1) + indent(n) + "}\n")
+}
+case class While(cond:Expr, body:Stat) extends Stat {
+  override def toString = toString(0)
+  override def toString(n:Int) = 
+      indent(n) + s"while ($cond) {\n" +
+      body.toString(n+1) + indent(n) + "}\n"
+}
+case class In(v:String) extends Stat {
+  override def toString = toString(0)
+  override def toString(n:Int) = indent(n) + s"in($v);\n"
+}
+case class Out(e:Expr) extends Stat
+
+case class Var(v:String) extends Expr
+case class Const(n:Int) extends Expr
+case class Op(e1:Expr, op:Bop, e2:Expr) extends Expr
+case class UnaryOp(op:Uop, e:Expr) extends Expr
+
+sealed trait Bop
+case object Add extends Bop
+case object Sub extends Bop
+case object Mul extends Bop
+case object Div extends Bop
+
+case object Eq extends Bop
+case object Ne extends Bop
+case object Lt extends Bop
+case object Gt extends Bop
+case object Leq extends Bop
+case object Geq extends Bop
+
+case object And extends Bop
+case object Or extends Bop
+
+sealed trait Uop
+
+case object Not extends Uop
+case object Neg extends Uop

@@ -1,0 +1,10 @@
+
+
+package lang/**
+ * @author simpl_000
+ */
+object TestParser {
+  def main(args:Array[String]) = {
+    val is = new FileInputStream(new File("exmp/parsertest/test1.smp"));
+  }
+}

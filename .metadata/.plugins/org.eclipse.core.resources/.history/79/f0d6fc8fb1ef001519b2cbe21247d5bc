@@ -1,0 +1,55 @@
+package lang
+
+import java.io.InputStream
+import java.io.BufferedReader
+import java.io.InputStreamReader
+
+/**
+ * @author Chang Liu (liuchang@cs.umd.edu)
+ */
+
+class Lexer(is:InputStream) {
+  sealed trait Token
+  case class iden(n:String) extends Token
+  case class num(n:Int) extends Token
+  case object Lparen extends Token
+  case object Rparen extends Token
+  case object Lbracket extends Token
+  case object Rbracket extends Token
+  case object Lbrace extends Token
+  case object Rbrace extends Token
+  case object Add extends Token
+  case object Sub extends Token
+  case object Mul extends Token
+  case object Div extends Token
+  case object Eq extends Token
+  case object Neq extends Token
+  case object Lt extends Token
+  case object Leq extends Token
+  case object Gt extends Token
+  case object Geq extends Token
+  case object Eof extends Token
+  case object Unknown extends Token
+  
+  var reader = new BufferedReader(new InputStreamReader(is))
+  var curChar = reader.read()
+  var nextChar = if(curChar >= 0) reader.read() else -1
+  
+  def nextIdent() = {
+    ""
+  }
+  
+  def nextToken() = {
+    if (curChar < 0)
+      Eof
+    else {
+      curChar match {
+        case 'a', 'b' => nextIdent()
+      }
+    }
+  }
+}
+
+object Parser {
+  
+}

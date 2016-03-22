@@ -1,0 +1,10 @@
+
+
+/**
+ * @author simpl_000
+ */
+object TestParser {
+  void main(args:Array[String]) = {
+    
+  }
+}

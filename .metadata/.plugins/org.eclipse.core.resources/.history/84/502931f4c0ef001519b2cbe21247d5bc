@@ -1,0 +1,24 @@
+
+
+package lang
+
+import java.io.FileInputStream
+import java.io.File
+
+/**
+
+import java.io.FileInputStream
+import java.io.File
+
+import java.io.FileInputStream
+import java.io.File
+
+import java.io.FileInputStream
+import java.io.File
+ * @author simpl_000
+ */
+object TestParser {
+  def main(args:Array[String]) = {
+    val is = new FileInputStream(new File("exmp/parsertest/test1.smp"))
+  }
+}

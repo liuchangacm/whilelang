@@ -1,0 +1,202 @@
+package lang
+
+import java.io.InputStream
+import java.io.BufferedReader
+import java.io.InputStreamReader
+
+/**
+ * @author Chang Liu (liuchang@cs.umd.edu)
+ */
+
+class Lexer(is:InputStream) {
+  sealed trait Token
+  case class Iden(n:String) extends Token
+  case class Num(n:Int) extends Token
+  case object Lparen extends Token
+  case object Rparen extends Token
+  case object Lbracket extends Token
+  case object Rbracket extends Token
+  case object Lbrace extends Token
+  case object Rbrace extends Token
+  case object Add extends Token
+  case object Sub extends Token
+  case object Mul extends Token
+  case object Div extends Token
+  case object Eq extends Token
+  case object Neq extends Token
+  case object Lt extends Token
+  case object Leq extends Token
+  case object Gt extends Token
+  case object Geq extends Token
+  case object Neg extends Token
+  case object And extends Token
+  case object Or extends Token
+  case object Semicolon extends Token
+  case object Eof extends Token
+  case object Unknown extends Token
+  
+  var reader = new BufferedReader(new InputStreamReader(is))
+  var curChar = reader.read()
+  var nextChar = if(curChar >= 0) reader.read() else -1
+  
+  val ordinary=(('a' to 'z') ++ ('A' to 'Z') ++ ('0' to '9') ++ Array('_')).toSet
+  val num = ('0' to '9').toSet
+  
+  def nextIdent() = {
+    var sb = new StringBuffer
+    while(ordinary.contains(curChar.toChar)) {
+      sb.append(curChar)
+      readNext
+    }
+    Iden(sb.toString)
+  }
+  
+  def nextNum() = {
+    var sb = new StringBuffer
+    while(num.contains(curChar.toChar)) {
+      sb.append(curChar)
+      readNext
+    }
+    Num(sb.toString.toInt)
+  }
+  
+  def readNext() = {
+    curChar = if(curChar >= 0) nextChar else -1
+    nextChar = if(curChar >= 0) reader.read() else -1
+  }
+  
+  def nextToken():Token = {
+    if (curChar < 0)
+      Eof
+    else {
+      curChar match {
+        case 'a' 
+           | 'b'
+           | 'c'
+           | 'd'
+           | 'e'
+           | 'f'
+           | 'g'
+           | 'h'
+           | 'i'
+           | 'j'
+           | 'k'
+           | 'l'
+           | 'm'
+           | 'n'
+           | 'o'
+           | 'p'
+           | 'q'
+           | 'r'
+           | 's'
+           | 't'
+           | 'u'
+           | 'v'
+           | 'w'
+           | 'x'
+           | 'y'
+           | 'z'
+           | 'A'
+           | 'B'
+           | 'C'
+           | 'D'
+           | 'E'
+           | 'F'
+           | 'G'
+           | 'H'
+           | 'I'
+           | 'J'
+           | 'K'
+           | 'L'
+           | 'M'
+           | 'N'
+           | 'O'
+           | 'P'
+           | 'Q'
+           | 'R'
+           | 'S'
+           | 'T'
+           | 'U'
+           | 'V'
+           | 'W'
+           | 'X'
+           | 'Y'
+           | 'Z' 
+           | '_' => nextIdent()
+        case '0'
+           | '1'
+           | '2'
+           | '3'
+           | '4'
+           | '5'
+           | '6'
+           | '7'
+           | '8'
+           | '9' => nextNum()
+        case ' '
+           | '\t'
+           | '\r'
+           | '\n' => { readNext; nextToken }
+        case '(' => { readNext; Lparen }
+        case ')' => { readNext; Rparen }
+        case '[' => { readNext; Lbracket }
+        case ']' => { readNext; Rbracket }
+        case '{' => { readNext; Lbrace }
+        case '}' => { readNext; Rbrace }
+        case '+' => { readNext; Add }
+        case '-' => { readNext; Sub }
+        case '*' => { readNext; Mul }
+        case '/' => { 
+          readNext
+          if (curChar == '\\') {
+            readNext
+            And
+          } else {
+            Div 
+          }
+        }
+        case '=' => { readNext; Eq }
+        case ';' => { readNext; Semicolon }
+        case '!' => {
+          readNext
+          if (curChar == '=') {
+            readNext
+            Neq
+          } else {
+            Neg
+          }
+        }
+        case '<' => {
+          readNext
+          if (curChar == '=') {
+            readNext
+            Leq
+          } else {
+            Lt
+          }
+        }
+        case '>' => {
+          readNext
+          if (curChar == '=') {
+            readNext
+            Geq
+          } else {
+            Gt
+          }
+        }
+        case -1 => Eof
+        case _ => {
+          curChar = -1
+          Unknown
+        }
+      }
+    }
+  }
+}
+
+object Parser {
+  def parse(lex:Lexer) = {
+    var token = lex.nextToken()
+    match token
+  }
+}

@@ -1,0 +1,33 @@
+package lang
+
+/**
+ * @author Chang Liu (liuchang@cs.umd.edu)
+ */
+object Formatter {
+  def indent(n:Int) = {
+    var sb = new StringBuffer
+    for(_ <- 0 until n) sb.append("    ")
+    sb.toString
+  }
+  
+  def toString(n:Int, ast:Ast):String = {
+    ast match {
+      case Skip => indent(n) + "skip;\n"
+      case Assign(x, e) => indent(n) + s"$x = $e;\n"
+      case Seq(s1, s2) => toString(n, s1) + toString(n, s2)
+      case If(cond, tbranch, fbranch) =>
+              indent(n) + s"if ($cond) {\n" +
+              toString(n, tbranch.toString(n+1) + indent(n) + "}" +
+              (if (fbranch == Skip) 
+                  "\n" 
+               else 
+                  " else {\n" + toString(n+1, fbranch) 
+                  + indent(n) + "}\n")
+      case While(cond, body) =>
+              indent(n) + s"while ($cond) {\n" +
+              body.toString(n+1) + indent(n) + "}\n"
+      case In(v) => indent(n) + s"in($v)"
+      case Out(e) => indent(n) + s"print($e)"
+    }
+  }
+}

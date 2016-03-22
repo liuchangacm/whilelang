@@ -1,0 +1,21 @@
+package lang
+
+import java.io.InputStream
+
+/**
+ * @author Chang Liu (liuchang@cs.umd.edu)
+ */
+
+class Lexer(is:InputStream) {
+  sealed trait Token
+  case class iden(n:String) extends Token
+  case class num(n:Int) extends Token
+  case object Lparen extends Token
+  case object Rparen extends Token
+  case object Lbracket extends Token
+  case object Rbracket extends Token
+}
+
+object Parser {
+  
+}

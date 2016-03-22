@@ -1,0 +1,14 @@
+package lang
+
+/**
+ * @author Chang Liu (liuchang@cs.umd.edu)
+ */
+object Formatter {
+  def indent(n:Int) = {
+    var sb = new StringBuffer
+    for(_ <- 0 until n) sb.append("    ")
+    sb.toString
+  }
+  
+  def toString(n:Int, ast:Ast)
+}

@@ -1,0 +1,10 @@
+/**
+ * Copyright Chang Liu (liuchang@cs.umd.edu)
+ */
+package lang
+
+/**
+ * @author Chang Liu (liuchang@cs.umd.edu)
+ */
+trait Ast
+case Skip

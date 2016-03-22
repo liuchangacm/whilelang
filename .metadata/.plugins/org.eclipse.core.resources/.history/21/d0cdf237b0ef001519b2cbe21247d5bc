@@ -1,0 +1,15 @@
+package lang
+
+import java.io.InputStream
+
+/**
+ * @author Chang Liu (liuchang@cs.umd.edu)
+ */
+
+class Lexer(is:InputStream) {
+  sealed trait Token
+}
+
+object Parser {
+  
+}

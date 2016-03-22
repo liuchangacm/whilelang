@@ -1,0 +1,12 @@
+/**
+ * Copyright Chang Liu (liuchang@cs.umd.edu)
+ */
+package lang
+
+/**
+ * @author Chang Liu (liuchang@cs.umd.edu)
+ */
+trait Ast
+trait Statement extends Ast
+case class Skip() extends Statement
+case class Assign(v:String, e:Expr) extends Ast
