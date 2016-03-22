@@ -1,8 +1,0 @@
-
-
-package ast/**
- * @author simpl_000
- */
-trait Ast {
-  
-}

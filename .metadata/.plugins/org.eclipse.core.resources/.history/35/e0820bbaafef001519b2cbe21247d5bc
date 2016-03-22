@@ -1,8 +1,0 @@
-package lang
-
-/**
- * @author simpl_000
- */
-object Parser {
-  
-}

@@ -1,8 +1,0 @@
-/**
- * Copyright Chang Liu
- */
-package lang
-
-trait Ast {
-  
-}
