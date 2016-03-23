@@ -2,3 +2,7 @@ compile
 run
 test:run
 exit
+compile
+test:run
+exit()
+exit
