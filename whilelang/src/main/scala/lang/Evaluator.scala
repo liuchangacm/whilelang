@@ -88,8 +88,4 @@ object Evaluator {
       }
     }
   }
-
-  def throwExcept(msg:String) = {
-    println(msg)
-  }
 }
